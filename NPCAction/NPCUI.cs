@@ -25,12 +25,13 @@ namespace NPCAction
                     List<NPC> npcs = await NPC.Query(x => Vector3.Distance(x.Position, collider.transform.position) < 0.1f);
                     if (!npcs.Any()) continue;
                     NPC npc = npcs.FirstOrDefault();
-                    panel.AddTabLine(Text.ApplyAlign(Text.Gradient.ApplyGrandient(npc.Name, Color.red, Color.cyan),Text.Align.Center),"",PlayerUtils.Items.GetItemIconById(1127), ui => { panel.PanelClose(); npc.Action?.Invoke(); });
+                    panel.AddTabLine(Text.ApplyAlign(Text.Gradient.ApplyGradient(npc.Name, Text.Colors.Red, Text.Colors.Cyan),Text.Align.Center),"",PlayerUtils.Items.GetItemIconById(1127), ui => { panel.PanelClose(); npc.Action?.Invoke(player); }); 
                 }
             }
             panel.CloseButtonColor();
             panel.SelectButtonNameColor("Parler");
             panel.ShowPanel();
+        
         }
     }
 }
