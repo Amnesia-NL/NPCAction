@@ -20,7 +20,7 @@ namespace NPCAction
             PanelUI panel = new PanelUI("PNJ", UIPanel.PanelType.TabPrice, player, async () => await NPCPanel(player));
             foreach(Collider collider in Physics.OverlapSphere(player.setup.transform.position,5f))
             {
-                if(collider.gameObject.CompareTag("Amnesia_NPC"))
+                if(collider.gameObject.GetComponent<NpcComponent>() != null)
                 {
                     List<NPC> npcs = await NPC.Query(x => Vector3.Distance(x.Position, collider.transform.position) < 0.1f);
                     if (!npcs.Any()) continue;
