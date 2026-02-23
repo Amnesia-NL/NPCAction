@@ -23,39 +23,34 @@ namespace NPCAction
             List<NPC> NearNPC = new List<NPC>();
             foreach (Collider collider in Physics.OverlapSphere(player.setup.transform.position, 5f))
             {
-                Console.WriteLine("Collider hit: " + collider.name);
                 NpcComponent component = collider.gameObject.GetComponent<NpcComponent>();
                 if (component != null)
-                { 
-                    Console.WriteLine("Found");
+                {
                     if (NPCBuilder.npcs.Count == 0)
                     {
                         break;
                     }
-                    Console.WriteLine("Continue");
                     NPC npc = null;
-                    Console.WriteLine("1");
-                    foreach(NPC instance in NPCBuilder.npcs)
+                    foreach (NPC instance in NPCBuilder.npcs)
                     {
-                        Console.WriteLine("2");
-                        if((instance.Position - collider.gameObject.transform.position).sqrMagnitude < 4f)
+                        if ((instance.Position - collider.gameObject.transform.position).sqrMagnitude < 4f)
                         {
-                            if(NearNPC.Contains(instance))
+                            if (NearNPC.Contains(instance))
                             {
                                 continue;
                             }
                             NearNPC.Add(instance);
-                            Console.WriteLine("Good");
                             npc = instance;
                             break;
                         }
-                        Console.WriteLine("3");
                     }
-                    Console.WriteLine("4");
                     if (npc == null) continue;
-                    Console.WriteLine("SO good");
-                    panel.AddTabLine(Text.ApplyAlign(Text.Gradient.ApplyGradient(npc.Name, Text.Colors.Red, Text.Colors.Cyan), Text.Align.Center), "", PlayerUtils.Items.GetItemIconById(1127), ui => { panel.PanelClose(); npc.Action?.Invoke(player); });
+                    panel.AddTabLine(Text.ApplyAlign(Text.Gradient.ApplyGradient(npc.Name, Text.Colors.Red, Text.Colors.Cyan), Text.Align.Center), "", npc.IconId > 0 ? PlayerUtils.Items.GetItemIconById(npc.IconId) : PlayerUtils.Items.GetItemIconById(1127), ui => { panel.PanelClose(); npc.Action?.Invoke(player); });
                 }
+            }
+            if(NearNPC.Count == 0)
+            {
+                panel.TabLineNameColor("Aucun PNJ à proximité", () => panel.PanelClose(),Text.Colors.Red);
             }
             panel.CloseButtonColor();
             panel.SelectButtonNameColor("Parler");
