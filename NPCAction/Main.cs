@@ -17,7 +17,7 @@ namespace NPCAction
         public override async void OnPlayerInput(Player player, KeyCode keyCode, bool onUI)
         {
             base.OnPlayerInput(player, keyCode, onUI);
-            if (keyCode == KeyCode.F8 && !onUI) await NPCUI.NPCPanel(player); 
+            if (keyCode == KeyCode.G && !onUI) await NPCUI.NPCPanel(player); 
         }
     }
 }
