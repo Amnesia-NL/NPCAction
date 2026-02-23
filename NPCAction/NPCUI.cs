@@ -21,7 +21,7 @@ namespace NPCAction
         {
             PanelUI panel = new PanelUI("PNJ", UIPanel.PanelType.TabPrice, player, async () => await NPCPanel(player));
             List<NPC> NearNPC = new List<NPC>();
-            foreach (Collider collider in Physics.OverlapSphere(player.setup.transform.position, 5f))
+            foreach (Collider collider in Physics.OverlapSphere(player.setup.transform.position, 2f))
             {
                 NpcComponent component = collider.gameObject.GetComponent<NpcComponent>();
                 if (component != null)
@@ -50,7 +50,8 @@ namespace NPCAction
             }
             if(NearNPC.Count == 0)
             {
-                panel.TabLineNameColor("Aucun PNJ à proximité", () => panel.PanelClose(),Text.Colors.Red);
+                panel.TabLineNameColor("Aucun PNJ à proximité", () => player.Notify(Text.Orange("PNJ"),"Aucun pnj à proximité"), Text.Colors.Red);
+
             }
             panel.CloseButtonColor();
             panel.SelectButtonNameColor("Parler");
